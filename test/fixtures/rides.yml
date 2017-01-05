@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  driver_id: 1
+  from_city_id: 1
+  from_neighborhood_id: 1
+  from_description: MyText
+  to_city_id: 1
+  to_neighborhood_id: 1
+  to_description: MyText
+  start_at: 2017-01-03 19:32:17
+  end_at: 2017-01-03 19:32:17
+  status: MyString
+  description: MyText
+
+two:
+  driver_id: 1
+  from_city_id: 1
+  from_neighborhood_id: 1
+  from_description: MyText
+  to_city_id: 1
+  to_neighborhood_id: 1
+  to_description: MyText
+  start_at: 2017-01-03 19:32:17
+  end_at: 2017-01-03 19:32:17
+  status: MyString
+  description: MyText

@@ -122,7 +122,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt (~> 3.1.7)
+  bcrypt
   byebug
   listen (~> 3.0.5)
   mysql2
