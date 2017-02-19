@@ -1,30 +1,44 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
 
-  # GET /users
   def index
     @users = User.all
 
     render json: @users
   end
 
-  # GET /users/1
   def show
     render json: @user
   end
 
-  # POST /users
+  def check_email
+    render json: User.find_by(email: params[:email]).blank?
+  end
+
   def create
     @user = User.new(user_params)
-
     if @user.save
-      render json: @user, status: :created, location: @user
+      render json: @user.token, status: :created, location: @user
     else
+      puts @user.errors
       render json: @user.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /users/1
+  def login
+    if params[:auth_token].present?
+      user = User.find_by(token: params[:auth_token])
+    else
+      user = User.find_by(email: params[:email]).try(:authenticate, params[:password])
+    end
+    
+    if user
+      create_device(user, params[:uuid], params[:model], params[:platform], params[:version], params[:device_token])
+      render :json => { result: 'success', user: user.to_json }
+    else
+      render :json => { :result => 'error' }
+    end
+  end
+
   def update
     if @user.update(user_params)
       render json: @user
@@ -33,19 +47,27 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
   def destroy
     @user.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
+
+    def user_params
+      params.require(:user).permit(:name, :email, :password)
     end
 
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.require(:user).permit(:name, :email)
+    def create_device(user, uuid, model, platform, version, token)
+      device =  Device.find_by(uuid: uuid, user: user)
+      if uuid && token && device.blank?
+        device = Device.new
+        device.user     = user
+        device.uuid     = uuid
+        device.model    = model
+        device.platform = platform
+        device.version  = version
+        device.token    = token
+        device.save
+      end
     end
 end

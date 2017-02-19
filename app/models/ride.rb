@@ -1,5 +1,5 @@
 class Ride < ApplicationRecord
-    has_one :driver, class_name: 'User'
+    belongs_to :driver, class_name: 'User'
     has_many :passengers
     belongs_to :from_city, class_name: 'City'
     belongs_to :from_neighborhood, class_name: 'Neighborhood'

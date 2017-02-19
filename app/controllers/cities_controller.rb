@@ -1,19 +1,16 @@
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :update, :destroy]
 
-  # GET /cities
   def index
     @cities = City.all
 
     render json: @cities
   end
 
-  # GET /cities/1
   def show
     render json: @city
   end
 
-  # POST /cities
   def create
     @city = City.new(city_params)
 
@@ -24,7 +21,6 @@ class CitiesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /cities/1
   def update
     if @city.update(city_params)
       render json: @city

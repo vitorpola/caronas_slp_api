@@ -17,6 +17,7 @@ gem 'bcrypt'
 # gem 'capistrano-rails', group: :development
 
 gem 'rack-cors'
+gem 'gcm'
 
 group :development, :test do
   gem 'mysql2'

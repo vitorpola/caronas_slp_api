@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170105215324) do
+ActiveRecord::Schema.define(version: 20170206230304) do
+
+  create_table "authentications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "oauth_token"
+    t.string   "oauth_token_secret"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "uuid"
+  end
 
   create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -25,6 +35,17 @@ ActiveRecord::Schema.define(version: 20170105215324) do
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "devices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "uuid"
+    t.string   "model"
+    t.string   "platform"
+    t.string   "version"
+    t.string   "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -64,6 +85,7 @@ ActiveRecord::Schema.define(version: 20170105215324) do
     t.text     "description",          limit: 65535
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.string   "ride_type"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -72,6 +94,7 @@ ActiveRecord::Schema.define(version: 20170105215324) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
+    t.string   "token"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
